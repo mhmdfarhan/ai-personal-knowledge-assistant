@@ -9,18 +9,51 @@
   --font-mono: var(--font-geist-mono);
 }
 
-html,
+html {
+  min-height: 100%;
+  scrollbar-gutter: stable;
+  scroll-behavior: smooth;
+}
+
 body {
-  height: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 body {
   background-color: var(--color-zinc-950);
   color: var(--color-zinc-100);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
   background-color: var(--color-indigo-500);
   color: white;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-zinc-700) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-zinc-700);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-zinc-600);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-indigo-500);
+  outline-offset: 2px;
 }

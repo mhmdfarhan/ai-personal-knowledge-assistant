@@ -28,9 +28,9 @@ export default async function AppLayout({
   const email = profile?.email || user.email || "";
 
   return (
-    <div className="flex min-h-screen flex-col lg:flex-row">
+    <div className="flex min-h-screen flex-col bg-zinc-950 lg:flex-row">
       <Sidebar name={fullName} email={email} />
-      <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
+      <main className="min-w-0 flex-1 bg-gradient-to-b from-zinc-900/30 to-transparent px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
         {children}
       </main>
     </div>

@@ -22,13 +22,7 @@ const NAV_ITEMS = [
   { href: "/settings", label: "Pengaturan", icon: Settings },
 ];
 
-export function Sidebar({
-  name,
-  email,
-}: {
-  name: string;
-  email: string;
-}) {
+export function Sidebar({ name, email }: { name: string; email: string }) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -51,29 +45,27 @@ export function Sidebar({
     .join("") || "?";
 
   return (
-    <aside className="flex shrink-0 flex-col border-b border-zinc-800 bg-zinc-900/40 lg:min-h-screen lg:w-64 lg:border-b-0 lg:border-r">
+    <aside className="flex shrink-0 flex-col border-b border-zinc-800 bg-zinc-900/60 backdrop-blur-xl lg:min-h-screen lg:w-[272px] lg:border-b-0 lg:border-r">
       <div className="flex items-center justify-between gap-2 px-4 py-4 lg:px-5">
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600">
+        <Link href="/dashboard" className="flex items-center gap-2.5">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 shadow-md shadow-indigo-600/20">
             <Sparkles className="h-4 w-4 text-white" />
-          </div>
+          </span>
           <span className="text-sm font-semibold tracking-tight text-zinc-100">
-            Personal AI Assistant
+            Personal AI
+            <span className="font-light text-zinc-400"> Assistant</span>
           </span>
         </Link>
-
-        {/* Tombol logout — tampil di mobile */}
         <button
           onClick={handleSignOut}
           title="Keluar"
-          className="rounded-lg p-2 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100 lg:hidden"
+          className="rounded-full p-2 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100 lg:hidden"
         >
           <LogOut className="h-4 w-4" />
         </button>
       </div>
 
-      {/* Navigasi: horizontal di mobile, vertikal di desktop */}
-      <nav className="flex gap-1 overflow-x-auto px-3 pb-3 lg:flex-col lg:pb-0 lg:pt-2">
+      <nav className="flex gap-1.5 overflow-x-auto px-3 pb-3 lg:flex-col lg:gap-1 lg:pb-0 lg:pt-2">
         {NAV_ITEMS.map((item) => {
           const active = isActive(item.href);
           return (
@@ -81,9 +73,9 @@ export function Sidebar({
               key={item.href}
               href={item.href}
               className={cn(
-                "flex shrink-0 items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                "flex shrink-0 items-center gap-2.5 rounded-full px-3.5 py-2 text-sm font-medium transition-all lg:rounded-xl",
                 active
-                  ? "bg-indigo-600/15 text-indigo-300"
+                  ? "bg-white text-zinc-900 shadow-sm"
                   : "text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100",
               )}
             >
@@ -94,24 +86,29 @@ export function Sidebar({
         })}
       </nav>
 
-      {/* Profil + logout — desktop */}
-      <div className="mt-auto hidden border-t border-zinc-800 px-5 py-4 lg:block">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-800 text-xs font-semibold text-zinc-300">
+      <div className="mt-auto hidden border-t border-zinc-800 p-4 lg:block">
+        <div className="flex items-center gap-3 rounded-2xl border border-zinc-800 bg-zinc-900/80 px-3 py-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-zinc-700 to-zinc-800 text-xs font-semibold text-zinc-200 ring-1 ring-zinc-700">
             {initials}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium text-zinc-200">{name}</p>
+            <p className="truncate text-sm font-medium text-zinc-100">{name}</p>
             <p className="truncate text-xs text-zinc-500">{email}</p>
           </div>
           <button
             onClick={handleSignOut}
             title="Keluar"
-            className="rounded-lg p-2 text-zinc-500 hover:bg-zinc-800 hover:text-zinc-200"
+            className="rounded-full p-2 text-zinc-500 hover:bg-zinc-800 hover:text-zinc-200"
           >
             <LogOut className="h-4 w-4" />
           </button>
         </div>
+        <Link
+          href="/"
+          className="mt-3 block text-center text-xs text-zinc-500 hover:text-zinc-300"
+        >
+          ← Kembali ke landing
+        </Link>
       </div>
     </aside>
   );

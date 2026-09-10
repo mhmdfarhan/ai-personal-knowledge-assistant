@@ -15,12 +15,14 @@ export function StatCard({
   accent?: string;
 }) {
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5">
+    <div className="group rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5 backdrop-blur transition hover:border-zinc-700">
       <div className="flex items-center justify-between">
         <p className="text-sm text-zinc-400">{label}</p>
-        <Icon className={cn("h-4 w-4", accent)} />
+        <span className="flex h-8 w-8 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900">
+          <Icon className={cn("h-4 w-4", accent)} />
+        </span>
       </div>
-      <p className="mt-2 text-2xl font-semibold tracking-tight text-zinc-100">
+      <p className="mt-3 text-2xl font-semibold tracking-tight text-zinc-100">
         {value}
       </p>
       {hint && <p className="mt-1 text-xs text-zinc-500">{hint}</p>}

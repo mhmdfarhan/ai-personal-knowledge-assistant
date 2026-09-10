@@ -10,6 +10,8 @@ const PUBLIC_AUTH_PATHS = [
   "/auth/auth-code-error",
 ];
 
+const PUBLIC_EXACT_PATHS = ["/"];
+
 /**
  * Halaman yang tetap boleh diakses user yang sudah login (mis. ganti password
  * setelah recovery, karena butuh sesi aktif).
@@ -62,11 +64,12 @@ export async function proxy(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
   const isApi = pathname.startsWith("/api");
-  const isPublic = PUBLIC_AUTH_PATHS.some((p) => pathname.startsWith(p));
+  const isPublicAuth = PUBLIC_AUTH_PATHS.some((p) => pathname.startsWith(p));
+  const isPublicExact = PUBLIC_EXACT_PATHS.includes(pathname);
+  const isPublic = isPublicAuth || isPublicExact;
   const needsSession =
     SESSION_REQUIRED_AUTH_PATHS.some((p) => pathname.startsWith(p));
 
-  // Halaman private: wajib login.
   if (!user && !isPublic && !needsSession && !isApi) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
@@ -74,9 +77,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // User sudah login, jangan biarkan kembali ke halaman auth (kecuali yang
-  // butuh sesi seperti ganti password).
-  if (user && isPublic) {
+  if (user && isPublicAuth) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
     url.search = "";
